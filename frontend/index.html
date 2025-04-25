@@ -3,78 +3,302 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>General Store Inventory</title>
+    <title>General Store Inventory Management</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet"  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-
-    <!-- 🔹 Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm fixed-top">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="#">🛒 General Store</a>
+            <a class="navbar-brand fw-bold" href="#">
+                <i class="fas fa-store-alt me-2"></i>GeneralStore Pro
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="products.html">Products</a></li>
-                    <li class="nav-item"><a class="nav-link" href="orders.html">Orders</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="index.html"><i class="fas fa-home me-1"></i> Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="products.html"><i class="fas fa-boxes me-1"></i> Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="orders.html"><i class="fas fa-clipboard-list me-1"></i> Orders</a></li>
+                    <li class="nav-item"><a class="nav-link" href="analytics.html"><i class="fas fa-chart-bar me-1"></i> Analytics</a></li>
                 </ul>
+                <a href="products.html" class="btn btn-light ms-3">
+                    <i class="fas fa-rocket me-1"></i> Get Started
+                </a>
             </div>
         </div>
     </nav>
 
-    <!-- 🔥 Hero Section -->
-    <header class="hero">
-        <div class="container text-center text-white">
-            <h1 class="display-4 fw-bold">Welcome to General Store</h1>
-            <p class="lead">Effortlessly manage your inventory and orders with our smart system.</p>
-            <a href="products.html" class="btn btn-primary btn-lg">View Products</a>
+    <!-- Hero Section -->
+    <header class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-4 fw-bold mb-4">Genral Store Inventory Management System </h1>
+                    <p class="lead mb-4">Streamline your operations, track inventory in real-time, and make data-driven decisions with our powerful management system.</p>
+                    <div class="d-flex gap-3">
+                        <a href="products.html" class="btn btn-primary btn-lg px-4">
+                            <i class="fas fa-play me-2"></i> Explore Now
+                        </a>
+                        <a href="#features" class="btn btn-outline-light btn-lg px-4">
+                            <i class="fas fa-info-circle me-2"></i> Learn More
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6 d-none d-lg-block">
+                    <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df" alt="Inventory Management" class="img-fluid rounded-3 shadow">
+                </div>
+            </div>
+        </div>
+        <div class="wave-divider">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="#fff"></path>
+                <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="#fff"></path>
+                <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="#fff"></path>
+            </svg>
         </div>
     </header>
 
-    <!-- 🔹 Features Section -->
-    <section class="features py-5">
+    <!-- Stats Section -->
+    <section class="stats-section py-5 bg-light">
         <div class="container">
-            <div class="row text-center">
-                <div class="col-md-4">
-                    <i class="fas fa-box-open fa-3x text-primary"></i>
-                    <h3 class="mt-3">Inventory Management</h3>
-                    <p>Keep track of stock levels, prices, and product details easily.</p>
+            <div class="row g-4">
+                <div class="col-md-3 col-6">
+                    <div class="stat-card text-center p-4 rounded-3 shadow-sm">
+                        <i class="fas fa-boxes fa-3x text-primary mb-3"></i>
+                        <h3 class="fw-bold mb-0">10,000+</h3>
+                        <p class="text-muted mb-0">Products Managed</p>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <i class="fas fa-truck-loading fa-3x text-success"></i>
-                    <h3 class="mt-3">Seamless Orders</h3>
-                    <p>Manage customer orders and deliveries efficiently.</p>
+                <div class="col-md-3 col-6">
+                    <div class="stat-card text-center p-4 rounded-3 shadow-sm">
+                        <i class="fas fa-store fa-3x text-success mb-3"></i>
+                        <h3 class="fw-bold mb-0">500+</h3>
+                        <p class="text-muted mb-0">Stores Worldwide</p>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <i class="fas fa-chart-line fa-3x text-danger"></i>
-                    <h3 class="mt-3">Sales Analytics</h3>
-                    <p>Analyze sales trends and improve business performance.</p>
+                <div class="col-md-3 col-6">
+                    <div class="stat-card text-center p-4 rounded-3 shadow-sm">
+                        <i class="fas fa-clipboard-check fa-3x text-warning mb-3"></i>
+                        <h3 class="fw-bold mb-0">1M+</h3>
+                        <p class="text-muted mb-0">Monthly Orders</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-card text-center p-4 rounded-3 shadow-sm">
+                        <i class="fas fa-users fa-3x text-info mb-3"></i>
+                        <h3 class="fw-bold mb-0">24/7</h3>
+                        <p class="text-muted mb-0">Customer Support</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 🔹 Call to Action -->
-    <section class="cta text-center py-5 text-white">
+    <!-- Features Section -->
+    <section id="features" class="features-section py-5">
         <div class="container">
-            <h2 class="fw-bold">Ready to get started?</h2>
-            <p>Explore our inventory and start managing your store today!</p>
-            <a href="products.html" class="btn btn-light btn-lg">Go to Inventory</a>
+            <div class="text-center mb-5">
+                <h2 class="section-title fw-bold">Powerful Features</h2>
+                <p class="section-subtitle text-muted">Everything you need to manage your store efficiently</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card p-4 rounded-3 h-100">
+                        <div class="feature-icon bg-primary-light mb-4">
+                            <i class="fas fa-boxes text-primary"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Inventory Tracking</h4>
+                        <p class="text-muted">Real-time tracking of all products with automated low-stock alerts and reordering suggestions.</p>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check-circle text-success me-2"></i> Barcode scanning</li>
+                            <li><i class="fas fa-check-circle text-success me-2"></i> Batch tracking</li>
+                            <li><i class="fas fa-check-circle text-success me-2"></i> Expiry management</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card p-4 rounded-3 h-100">
+                        <div class="feature-icon bg-success-light mb-4">
+                            <i class="fas fa-clipboard-list text-success"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Order Management</h4>
+                        <p class="text-muted">Streamline your order processing from creation to fulfillment with our intuitive system.</p>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check-circle text-success me-2"></i> Multi-channel orders</li>
+                            <li><i class="fas fa-check-circle text-success me-2"></i> Automated invoicing</li>
+                            <li><i class="fas fa-check-circle text-success me-2"></i> Shipping integration</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="feature-card p-4 rounded-3 h-100">
+                        <div class="feature-icon bg-danger-light mb-4">
+                            <i class="fas fa-chart-pie text-danger"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Advanced Analytics</h4>
+                        <p class="text-muted">Gain valuable insights with customizable reports and interactive dashboards.</p>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check-circle text-success me-2"></i> Sales trends</li>
+                            <li><i class="fas fa-check-circle text-success me-2"></i> Profit analysis</li>
+                            <li><i class="fas fa-check-circle text-success me-2"></i> Forecasting tools</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- 🔹 Footer -->
-    <footer class="bg-dark text-white text-center p-3">
-        <p>&copy; 2025 General Store. All rights reserved.</p>
+    <!-- Testimonials -->
+    <section class="testimonials-section py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title fw-bold">Trusted by Store Owners</h2>
+                <p class="section-subtitle text-muted">What our customers say about us</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="testimonial-card p-4 rounded-3 h-100">
+                        <div class="rating mb-3">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                        </div>
+                        <p class="mb-4">"This system transformed our store operations. Inventory management is now a breeze and we've reduced waste by 30%."</p>
+                        <div class="d-flex align-items-center">
+                            <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Sarah Johnson" class="rounded-circle me-3" width="50">
+                            <div>
+                                <h6 class="mb-0 fw-bold">Sarah Johnson</h6>
+                                <small class="text-muted">Owner, FreshMart</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="testimonial-card p-4 rounded-3 h-100">
+                        <div class="rating mb-3">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star-half-alt text-warning"></i>
+                        </div>
+                        <p class="mb-4">"The analytics dashboard helped us identify our best-selling products and optimize our inventory accordingly. Highly recommended!"</p>
+                        <div class="d-flex align-items-center">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Michael Chen" class="rounded-circle me-3" width="50">
+                            <div>
+                                <h6 class="mb-0 fw-bold">Michael Chen</h6>
+                                <small class="text-muted">Manager, Urban Grocers</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="testimonial-card p-4 rounded-3 h-100">
+                        <div class="rating mb-3">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                        </div>
+                        <p class="mb-4">"Switching to GeneralStore Pro was the best decision we made. The mobile access allows me to manage my store from anywhere."</p>
+                        <div class="d-flex align-items-center">
+                            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Lisa Rodriguez" class="rounded-circle me-3" width="50">
+                            <div>
+                                <h6 class="mb-0 fw-bold">Lisa Rodriguez</h6>
+                                <small class="text-muted">CEO, Corner Delight</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section py-5 bg-primary text-white">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h2 class="fw-bold mb-3">Ready to Transform Your Store Management?</h2>
+                    <p class="mb-lg-0">Join thousands of stores that are already benefiting from our powerful inventory system.</p>
+                </div>
+                <div class="col-lg-4 text-lg-end">
+                    <a href="products.html" class="btn btn-light btn-lg px-4">
+                        <i class="fas fa-rocket me-2"></i> Get Started Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer bg-dark text-white pt-5 pb-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="fw-bold mb-3">
+                        <i class="fas fa-store-alt me-2"></i>GeneralStore Pro
+                    </h5>
+                    <p>The complete inventory management solution for modern retail stores of all sizes.</p>
+                    <div class="social-icons mt-3">
+                        <a href="#" class="text-white me-2"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="fw-bold mb-3">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="index.html" class="text-white">Home</a></li>
+                        <li class="mb-2"><a href="products.html" class="text-white">Products</a></li>
+                        <li class="mb-2"><a href="orders.html" class="text-white">Orders</a></li>
+                        <li class="mb-2"><a href="analytics.html" class="text-white">Analytics</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="fw-bold mb-3">Resources</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white">Documentation</a></li>
+                        <li class="mb-2"><a href="#" class="text-white">API Reference</a></li>
+                        <li class="mb-2"><a href="#" class="text-white">Help Center</a></li>
+                        <li class="mb-2"><a href="#" class="text-white">Community</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="fw-bold mb-3">Contact Us</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> 123 Business Ave, Suite 100</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> (555) 123-4567</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> support@generalstore.com</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">&copy; 2025 GeneralStore Pro. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <p class="mb-0">
+                        <a href="#" class="text-white me-3">Privacy Policy</a>
+                        <a href="#" class="text-white">Terms of Service</a>
+                    </p>
+                </div>
+            </div>
+        </div>
     </footer>
 
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
-<<!--spandan-->

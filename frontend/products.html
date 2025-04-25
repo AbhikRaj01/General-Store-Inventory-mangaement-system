@@ -5,82 +5,125 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products - General Store</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-
-    <!-- 🔹 Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="#">General Store</a>
+            <a class="navbar-brand fw-bold" href="#"><i class="fas fa-store me-2"></i>General Store</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="products.html">Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="products.html">Products</a></li>
                     <li class="nav-item"><a class="nav-link" href="orders.html">Orders</a></li>
+                    <li class="nav-item"><a class="nav-link" href="analytics.html">Analytics</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!-- 🔹 Main Content -->
-    <div class="container mt-5">
-        <h2 class="text-center">Product Inventory</h2>
+    <!-- Main Content -->
+    <div class="container my-5">
+        <h2 class="text-center mb-4">Product Inventory</h2>
 
-        <!-- 🟢 Search Bar -->
-        <div class="input-group mb-3">
+        <!-- Search Bar -->
+        <div class="input-group mb-4 shadow-sm">
             <input type="text" id="searchBar" class="form-control" placeholder="Search products...">
-            <button class="btn btn-dark" onclick="searchProducts()">Search</button>
+            <button class="btn btn-outline-dark" onclick="searchProducts()"><i class="fas fa-search"></i> Search</button>
         </div>
 
-        <!-- 🟢 Add New Product Section -->
-        <section class="add-product p-3 bg-light border rounded">
-            <h4>Add New Product</h4>
-            <div class="row">
-                <div class="col-md-3">
-                    <input type="text" id="productName" class="form-control" placeholder="Product Name">
+        <!-- Add Product Section -->
+        <section class="add-product p-4 bg-light rounded shadow-sm mb-4">
+            <h4 class="mb-3">Add New Product</h4>
+            <form id="addProductForm">
+                <div class="row g-3 align-items-end">
+                    <!-- Product Name Field -->
+                    <div class="col-md-4">
+                        <label for="productName" class="form-label">Product Name</label>
+                        <input type="text" id="productName" class="form-control" 
+                               placeholder="e.g., Laptop" required
+                               pattern=".{3,}" title="At least 3 characters">
+                        <div class="invalid-feedback">Please enter a valid product name (min 3 chars)</div>
+                    </div>
+                    
+                    <!-- Price Field -->
+                    <div class="col-md-3">
+                        <label for="productPrice" class="form-label">Price</label>
+                        <input type="number" id="productPrice" class="form-control" 
+                               placeholder="0.00" step="0.01" min="0.01" required>
+                        <div class="invalid-feedback">Please enter a valid price (> $0)</div>
+                    </div>
+                    
+                    <!-- Quantity Field -->
+                    <div class="col-md-3">
+                        <label for="productQuantity" class="form-label">Quantity</label>
+                        <input type="number" id="productQuantity" class="form-control" 
+                               placeholder="0" min="1" required>
+                        <div class="invalid-feedback">Please enter quantity (min 1)</div>
+                    </div>
+                    
+                    <!-- Submit Button -->
+                    <div class="col-md-2 d-grid">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus-circle me-1"></i> Add Product
+                        </button>
+                    </div>
                 </div>
-                <div class="col-md-3">
-                    <input type="number" id="productPrice" class="form-control" placeholder="Price">
-                </div>
-                <div class="col-md-3">
-                    <input type="number" id="productQuantity" class="form-control" placeholder="Quantity">
-                </div>
-                <div class="col-md-3">
-                    <button class="btn btn-primary w-100" onclick="addProduct()">Add Product</button>
-                </div>
-            </div>
+            </form>
         </section>
 
-        <!-- 🟢 Product List Table -->
-        <section class="inventory mt-4">
-            <h4>Product List</h4>
-            <table class="table table-bordered">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody id="productTable">
-                    <!-- Products will be added dynamically -->
-                </tbody>
-            </table>
+        <!-- Product List -->
+        <section class="shadow-sm">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped table-bordered align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Name</th>
+                            <th>Price ($)</th>
+                            <th>Quantity</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productTable"></tbody>
+                </table>
+            </div>
         </section>
     </div>
 
-    <!-- 🔹 Footer -->
-    <footer class="bg-dark text-white text-center p-3 mt-4">
-        <p>&copy; 2025 General Store. All rights reserved.</p>
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3 shadow-sm">
+        <p class="mb-0">&copy; 2025 General Store Inventory Management System . All rights reserved.</p>
     </footer>
 
-    <!-- ✅ Bootstrap JS for Navbar Fix -->
+    <!-- Add this near the bottom of your page -->
+<div class="mt-5 text-center">
+    <button onclick="resetAllData()" class="btn btn-danger">
+        <i class="fas fa-trash-alt me-1"></i> Reset All Data
+    </button>
+    <p class="text-muted mt-2 small">Warning: This cannot be undone</p>
+</div>
+
+<!-- Add this script at the end of products.html -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Load inventory immediately
+        displayInventory();
+        
+        // Set up form submission
+        document.getElementById("addProductForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            addProduct();
+        });
+    });
+    </script>
+
+
+    <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="script.js"></script> <!-- ✅ Ensure this is correctly linked -->
 </body>
 </html>

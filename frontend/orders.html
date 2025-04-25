@@ -5,64 +5,92 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Orders - General Store</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-
-    <!-- 🔹 Navbar -->
-    <nav class="navbar navbar-dark bg-dark p-3">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="#">General Store</a>
-            <ul class="nav">
-                <li class="nav-item"><a class="nav-link text-white" href="index.html">Home</a></li>
-                <li class="nav-item"><a class="nav-link text-white" href="products.html">Products</a></li>
-                <li class="nav-item"><a class="nav-link text-white active" href="orders.html">Orders</a></li>
-            </ul>
+            <a class="navbar-brand fw-bold" href="#"><i class="fas fa-store me-2"></i>General Store</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="products.html">Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="orders.html">Orders</a></li>
+                    <li class="nav-item"><a class="nav-link" href="analytics.html">Analytics</a></li>
+                </ul>
+            </div>
         </div>
     </nav>
 
-    <!-- 🔹 Place Order Section -->
-    <div class="container mt-4">
-        <h2 class="text-center">Place an Order</h2>
-        
-        <section class="add-order p-3 bg-light border rounded">
-            <h3>Order Details</h3>
-            <div class="row">
-                <div class="col-md-4">
-                    <input type="text" id="orderName" class="form-control" placeholder="Product Name">
-                </div>
-                <div class="col-md-4">
-                    <input type="number" id="orderQuantity" class="form-control" placeholder="Quantity">
-                </div>
-                <div class="col-md-4">
-                    <button class="btn btn-success w-100" onclick="placeOrder()">Place Order</button>
-                </div>
-            </div>
-        </section>
+    <!-- Main Content -->
+    <div class="container my-5">
+        <h2 class="text-center mb-4">Order Management</h2>
 
-        <!-- 🔹 Order History Table -->
-        <section class="mt-4">
-            <h3>Order History</h3>
+        <!-- Place Order Section -->
+<!-- orders.html -->
+<div class="container mt-4">
+    <h2 class="text-center">Place an Order</h2>
+    
+    <!-- Order Form -->
+    <section class="add-order p-3 bg-light border rounded mb-4">
+        <h3>Order Details</h3>
+        <div class="row g-3">
+            <div class="col-md-5">
+                <input type="text" id="orderName" class="form-control" placeholder="Product Name" required>
+                <div class="invalid-feedback">Please enter a product name</div>
+            </div>
+            <div class="col-md-5">
+                <input type="number" id="orderQuantity" class="form-control" placeholder="Quantity" min="1" required>
+                <div class="invalid-feedback">Please enter a valid quantity</div>
+            </div>
+            <div class="col-md-2 d-grid">
+                <button id="placeOrderBtn" class="btn btn-success">
+                    <i class="fas fa-check me-1"></i> Place Order
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Order History Table -->
+    <section class="mt-4">
+        <h3>Order History</h3>
+        <div class="table-responsive">
             <table class="table table-bordered">
                 <thead class="table-dark">
                     <tr>
                         <th>Product Name</th>
                         <th>Quantity</th>
                         <th>Status</th>
+                        <th>Date</th>
                     </tr>
                 </thead>
                 <tbody id="orderTable">
-                    <!-- Orders will be displayed here -->
+                    <!-- Orders will be inserted here by JavaScript -->
                 </tbody>
             </table>
-        </section>
-    </div>
+        </div>
+    </section>
+</div>
 
-    <!-- 🔹 Footer -->
-    <footer class="bg-dark text-white text-center p-3 mt-4">
-        <p>&copy; 2025 General Store. All rights reserved.</p>
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3 shadow-sm">
+        <p class="mb-0">&copy; 2025 General Store Inventory Management System . All rights reserved.</p>
     </footer>
 
+<!-- Add this near the bottom of your page -->
+<div class="mt-5 text-center">
+    <button onclick="resetAllData()" class="btn btn-danger">
+        <i class="fas fa-trash-alt me-1"></i> Reset All Data
+    </button>
+    <p class="text-muted mt-2 small">Warning: This cannot be undone</p>
+</div>    
+
     <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
