@@ -41,8 +41,8 @@
         <h3>Order Details</h3>
         <div class="row g-3">
             <div class="col-md-5">
-                <input type="text" id="orderName" class="form-control" placeholder="Product Name" required>
-                <div class="invalid-feedback">Please enter a product name</div>
+                <input type="text" id="productId" class="form-control" placeholder="Product ID (e.g., PRD-001)" required>
+                <div class="invalid-feedback">Please enter a valid Product ID</div>
             </div>
             <div class="col-md-5">
                 <input type="number" id="orderQuantity" class="form-control" placeholder="Quantity" min="1" required>
@@ -63,8 +63,12 @@
             <table class="table table-bordered">
                 <thead class="table-dark">
                     <tr>
-                        <th>Product Name</th>
-                        <th>Quantity</th>
+                        <th>ID</th>
+                        <th>Product</th>
+                        <th>Brand</th>
+                        <th>Qty</th>
+                        <th>Unit Price</th>
+                        <th>Total</th>
                         <th>Status</th>
                         <th>Date</th>
                     </tr>

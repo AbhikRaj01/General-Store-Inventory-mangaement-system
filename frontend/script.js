@@ -24,7 +24,9 @@ function displayInventory() {
     
     tableBody.innerHTML = inventory.map((product, index) => `
         <tr>
+            <td>${product.id || 'N/A'}</td>
             <td>${product.name}</td>
+            <td>${product.brand || 'Generic'}</td>
             <td>$${product.price.toFixed(2)}</td>
             <td>${product.quantity}</td>
             <td>
@@ -37,50 +39,97 @@ function displayInventory() {
 }
 
 function addProduct() {
+    // Get input values
+    const id = document.getElementById("productId").value.trim();
     const name = document.getElementById("productName").value.trim();
+    const brand = document.getElementById("productBrand").value.trim();
     const price = parseFloat(document.getElementById("productPrice").value);
     const quantity = parseInt(document.getElementById("productQuantity").value);
-    
-    // Validate inputs
-    let isValid = true;
+
+    // Reset validation errors
+    document.getElementById("productId").classList.remove("is-invalid");
     document.getElementById("productName").classList.remove("is-invalid");
     document.getElementById("productPrice").classList.remove("is-invalid");
     document.getElementById("productQuantity").classList.remove("is-invalid");
-    
+
+    // Validate Product ID (min 3 chars, alphanumeric)
+    if (!id || id.length < 3 || !/^[a-zA-Z0-9-]+$/.test(id)) {
+        document.getElementById("productId").classList.add("is-invalid");
+        alert("❌ Product ID must be at least 3 characters (letters/numbers/hyphens only)");
+        return;
+    }
+
+    // Validate Product Name (min 3 chars)
     if (!name || name.length < 3) {
         document.getElementById("productName").classList.add("is-invalid");
-        isValid = false;
+        alert("❌ Product Name must be at least 3 characters");
+        return;
     }
-    
+
+    // Validate Price (must be > 0)
     if (isNaN(price) || price <= 0) {
         document.getElementById("productPrice").classList.add("is-invalid");
-        isValid = false;
+        alert("❌ Price must be greater than $0");
+        return;
     }
-    
+
+    // Validate Quantity (must be ≥ 1)
     if (isNaN(quantity) || quantity < 1) {
         document.getElementById("productQuantity").classList.add("is-invalid");
-        isValid = false;
+        alert("❌ Quantity must be at least 1");
+        return;
     }
-    
-    if (!isValid) return;
 
-    // Process valid product
+    // Check inventory
     const inventory = loadInventory();
-    const existingProduct = inventory.find(p => p.name.toLowerCase() === name.toLowerCase());
+    const existingProductIndex = inventory.findIndex(p => p.id.toLowerCase() === id.toLowerCase());
     
-    if (existingProduct) {
-        existingProduct.quantity += quantity;
+    if (existingProductIndex !== -1) {
+        // Product exists - update quantity
+        const existingProduct = inventory[existingProductIndex];
+        
+        // Check if other details match (optional)
+        if (existingProduct.name !== name || existingProduct.brand !== brand || existingProduct.price !== price) {
+            if (!confirm(`⚠️ Product with ID ${id} exists but has different details. Update all fields?`)) {
+                return;
+            }
+        }
+        
+        // Update the existing product
+        inventory[existingProductIndex] = {
+            id,
+            name,
+            brand,
+            price,
+            quantity: existingProduct.quantity + quantity
+        };
+        
+        saveInventory(inventory);
+        displayInventory();
+        
+        // Clear form
+        document.getElementById("productId").value = "";
+        document.getElementById("productName").value = "";
+        document.getElementById("productBrand").value = "";
+        document.getElementById("productPrice").value = "";
+        document.getElementById("productQuantity").value = "";
+
+        alert(`✅ Updated existing product "${name}". New quantity: ${inventory[existingProductIndex].quantity}`);
     } else {
-        inventory.push({ name, price, quantity });
+        // Add as new product
+        inventory.push({ id, name, brand, price, quantity });
+        saveInventory(inventory);
+        displayInventory();
+
+        // Clear form
+        document.getElementById("productId").value = "";
+        document.getElementById("productName").value = "";
+        document.getElementById("productBrand").value = "";
+        document.getElementById("productPrice").value = "";
+        document.getElementById("productQuantity").value = "";
+
+        alert("✅ Product added successfully!");
     }
-    
-    saveInventory(inventory);
-    displayInventory();
-    
-    // Clear form
-    document.getElementById("productName").value = "";
-    document.getElementById("productPrice").value = "";
-    document.getElementById("productQuantity").value = "";
 }
 
 function deleteProduct(index) {
@@ -97,17 +146,27 @@ function searchProducts() {
     
     if (!tableBody) return;
     
+    if (!searchQuery) {
+        // If search is empty, show all products
+        displayInventory();
+        return;
+    }
+    
     const filtered = inventory.filter(product => 
-        product.name.toLowerCase().includes(searchQuery)
+        (product.name && product.name.toLowerCase().includes(searchQuery)) ||
+        (product.brand && product.brand.toLowerCase().includes(searchQuery)) ||
+        (product.id && product.id.toLowerCase().includes(searchQuery))
     );
     
     tableBody.innerHTML = filtered.map((product, index) => `
         <tr>
-            <td>${product.name}</td>
-            <td>$${product.price.toFixed(2)}</td>
-            <td>${product.quantity}</td>
+            <td>${product.id || 'N/A'}</td>
+            <td>${product.name || 'Unnamed'}</td>
+            <td>${product.brand || 'Generic'}</td>
+            <td>$${(product.price || 0).toFixed(2)}</td>
+            <td>${product.quantity || 0}</td>
             <td>
-                <button class="btn btn-danger btn-sm" onclick="deleteProduct(${inventory.indexOf(product)})">
+                <button class="btn btn-danger btn-sm" onclick="deleteProduct(${index})">
                     <i class="fas fa-trash-alt"></i> Delete
                 </button>
             </td>
@@ -115,7 +174,14 @@ function searchProducts() {
     `).join('');
 }
 
-// Order Functions
+// Add this new function to handle Enter key in search:
+document.getElementById("searchBar")?.addEventListener("keypress", function(e) {
+    if (e.key === "Enter") {
+        e.preventDefault();
+        searchProducts();
+    }
+});
+
 function displayOrders() {
     const orders = loadOrders();
     const tableBody = document.getElementById("orderTable");
@@ -125,7 +191,7 @@ function displayOrders() {
     if (orders.length === 0) {
         tableBody.innerHTML = `
             <tr>
-                <td colspan="4" class="text-center text-muted">No orders found</td>
+                <td colspan="8" class="text-center text-muted">No orders found</td>
             </tr>
         `;
         return;
@@ -133,26 +199,30 @@ function displayOrders() {
     
     tableBody.innerHTML = orders.map(order => `
         <tr>
-            <td>${order.name || order.productName}</td>
-            <td>${order.quantity}</td>
-            <td><span class="badge bg-${order.status === 'Confirmed' ? 'success' : 'warning'}">${order.status}</span></td>
-            <td>${new Date(order.timestamp || order.date).toLocaleString()}</td>
+            <td>${order.productId || 'N/A'}</td>
+            <td>${order.productName || 'N/A'}</td>
+            <td>${order.brand || 'Generic'}</td>
+            <td>${order.quantity || 0}</td>
+            <td>$${(order.price || 0).toFixed(2)}</td>
+            <td>$${(order.quantity * order.price || 0).toFixed(2)}</td>
+            <td><span class="badge bg-${order.status === 'Confirmed' ? 'success' : 'warning'}">${order.status || 'Pending'}</span></td>
+            <td>${order.timestamp ? new Date(order.timestamp).toLocaleString() : 'N/A'}</td>
         </tr>
     `).join('');
 }
 
 function placeOrder() {
-    const orderName = document.getElementById("orderName").value.trim();
+    const productId = document.getElementById("productId").value.trim();
     const orderQuantity = parseInt(document.getElementById("orderQuantity").value);
-    
+
     // Reset validation
-    document.getElementById("orderName").classList.remove("is-invalid");
+    document.getElementById("productId").classList.remove("is-invalid");
     document.getElementById("orderQuantity").classList.remove("is-invalid");
-    
+
     // Validate
     let isValid = true;
-    if (!orderName) {
-        document.getElementById("orderName").classList.add("is-invalid");
+    if (!productId) {
+        document.getElementById("productId").classList.add("is-invalid");
         isValid = false;
     }
     if (isNaN(orderQuantity) || orderQuantity < 1) {
@@ -161,49 +231,49 @@ function placeOrder() {
     }
     if (!isValid) return;
 
-    // Process order
+    // Find product by ID
     const inventory = loadInventory();
-    const orders = loadOrders();
-    const product = inventory.find(p => p.name.toLowerCase() === orderName.toLowerCase());
-    
+    const product = inventory.find(p => p.id.toLowerCase() === productId.toLowerCase());
+
     if (!product) {
-        alert(`Product "${orderName}" not found in inventory!`);
+        alert(`❌ Product with ID "${productId}" not found!`);
         return;
     }
     
     if (product.quantity < orderQuantity) {
-        alert(`Only ${product.quantity} ${product.name}(s) available!`);
+        alert(`❌ Only ${product.quantity} available for ${product.name} (${product.brand})!`);
         return;
     }
-    
+
     // Update inventory
     product.quantity -= orderQuantity;
     saveInventory(inventory);
-    
-    // Create order
+
+    // Create new order with ALL required fields
     const newOrder = {
-        id: Date.now().toString(),
-        name: product.name,
-        productName: product.name, // For backward compatibility
-        quantity: orderQuantity,
+        productId: product.id,
+        productName: product.name,
+        brand: product.brand,
         price: product.price,
-        totalPrice: (product.price * orderQuantity).toFixed(2),
+        quantity: orderQuantity,
         status: "Confirmed",
-        timestamp: new Date().toISOString(),
-        date: new Date().toISOString() // For backward compatibility
+        timestamp: new Date().toISOString()
     };
-    
+
     // Save order
+    const orders = loadOrders();
     orders.push(newOrder);
     saveOrders(orders);
-    
+
     // Update UI
     displayInventory();
     displayOrders();
-    
+
     // Clear form
-    document.getElementById("orderName").value = "";
+    document.getElementById("productId").value = "";
     document.getElementById("orderQuantity").value = "";
+
+    alert(`✅ Ordered ${orderQuantity}x ${product.name} (${product.brand})`);
 }
 
 // Data Reset Functions
